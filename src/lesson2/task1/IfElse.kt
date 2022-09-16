@@ -3,7 +3,10 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import javax.management.Query.or
+import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -96,8 +99,6 @@ fun timeForHalfWay(
     return if (halfs <= (t1 * v1)) halfs / v1 else
         return if (halfs <= (t1 * v1 + t2 * v2)) (halfs - t1 * v1) / v2 + t1 else
             return (halfs - t1 * v1 - t2 * v2) / v3 + t1 + t2
-
-
 }
 
 /**
@@ -113,7 +114,15 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    val dangerFromRook1 = (kingX == rookX1) or (kingY == rookY1)
+    val dangerFromRook2 = (kingX == rookX2) or (kingY == rookY2)
+    return if (dangerFromRook1 and dangerFromRook2) 3 else {
+        if (dangerFromRook1) return 1
+        if (dangerFromRook2) return 2
+        else return 0
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -129,7 +138,15 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    val dangerFromRook = (kingX == rookX) or (kingY == rookY)
+    val dangerFromBishop = abs(kingX - bishopX) == abs(kingY - bishopY)
+    return if (dangerFromRook and dangerFromBishop) 3 else {
+        if (dangerFromRook) return 1
+        if (dangerFromBishop) return 2
+        else return 0
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -139,7 +156,15 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return if ((a > b + c) or (b > a + c) or (c > a + b)) -1 else {
+        val cosAngle1 = (a * a + b * b - c * c) / 2 / a / b
+        val cosAngle2 = (b * b + c * c - a * a) / 2 / b / c
+        val cosAngle3 = (a * a + c * c - b * b) / 2 / a / c
+        return if ((cosAngle1 < 0) or (cosAngle2 < 0) or (cosAngle3 < 0)) 2 else
+            return if ((cosAngle1 == 0.0) or (cosAngle2 == 0.0) or (cosAngle3 == 0.0)) 1 else 0
+    }
+}
 
 /**
  * Средняя (3 балла)
@@ -149,4 +174,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    val lengthOfIntersection = min(b, d) - max(a, c)
+    return if (lengthOfIntersection < 0) -1 else lengthOfIntersection
+}
