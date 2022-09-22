@@ -118,10 +118,11 @@ fun whichRookThreatens(
 ): Int {
     val dangerFromRook1 = (kingX == rookX1) || (kingY == rookY1)
     val dangerFromRook2 = (kingX == rookX2) || (kingY == rookY2)
-    return if (dangerFromRook1 && dangerFromRook2) 3 else {
-        if (dangerFromRook1) return 1
-        if (dangerFromRook2) return 2
-        else return 0
+    return when {
+        (dangerFromRook1 && dangerFromRook2) -> 3
+        (dangerFromRook1) -> 1
+        (dangerFromRook2) -> 2
+        else -> 0
     }
 }
 
@@ -157,15 +158,17 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return if ((a > b + c) or (b > a + c) or (c > a + b)) -1 else {
+fun triangleKind(a: Double, b: Double, c: Double): Int =
+    if ((a > b + c) or (b > a + c) or (c > a + b)) -1 else {
         val cosAngle1 = (a * a + b * b - c * c) / 2 / a / b
         val cosAngle2 = (b * b + c * c - a * a) / 2 / b / c
         val cosAngle3 = (a * a + c * c - b * b) / 2 / a / c
-        return if ((cosAngle1 < 0) || (cosAngle2 < 0) || (cosAngle3 < 0)) 2 else
-            return if ((cosAngle1 == 0.0) || (cosAngle2 == 0.0) || (cosAngle3 == 0.0)) 1 else 0
+        when {
+            cosAngle1 < 0 || cosAngle2 < 0 || cosAngle3 < 0 -> 2
+            cosAngle1 == 0.0 || cosAngle2 == 0.0 || cosAngle3 == 0.0 -> 1
+            else -> 0
+        }
     }
-}
 
 /**
  * Средняя (3 балла)
