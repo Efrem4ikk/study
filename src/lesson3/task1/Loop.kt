@@ -72,7 +72,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var num = n
+    do {
+        count += 1
+        num /= 10
+    } while (num > 0)
+    return count
+}
 
 /**
  * Простая (2 балла)
@@ -80,21 +88,41 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int =
+    when (n) {
+        1 -> 1
+        2 -> 1
+        else -> fib(n - 1) + fib(n - 2)
+    }
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    return if (isPrime(n)) n else {
+        for (i in 2..n) {
+            if ((n % i) == 0) return i
+        }
+        return -1
+    }
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    return if (isPrime(n)) 1 else {
+        for (i in n - 1 downTo 2) {
+            if ((n % i) == 0) return i
+        }
+        return -1
+    }
+}
+
 
 /**
  * Простая (2 балла)
@@ -112,7 +140,15 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var number = x
+    var count = 0
+    while (number != 1) {
+        if (number % 2 == 0) number /= 2 else number = number * 3 + 1
+        count += 1
+    }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -120,7 +156,13 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    when {
+        m == n -> return m
+        else -> for (i in 2..1000) if (i % m == 0 && i % n == 0) return i
+    }
+    return -1
+}
 
 /**
  * Средняя (3 балла)

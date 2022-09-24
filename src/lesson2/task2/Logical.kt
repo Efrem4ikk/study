@@ -36,9 +36,9 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val dangerDirect = (x1 == x2) || (y1 == y2)
+    val dangerDirect = x1 == x2 || y1 == y2
     val dangerDiagonal = abs(x1 - x2) == abs(y1 - y2)
-    return (dangerDiagonal || dangerDirect)
+    return dangerDiagonal || dangerDirect
 }
 
 
@@ -48,8 +48,8 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int {
-    return if (month == 2) when {
+fun daysInMonth(month: Int, year: Int): Int =
+    if (month == 2) when {
         year % 4 != 0 -> 28
         year % 100 != 0 -> 29
         year % 400 == 0 -> 29
@@ -59,7 +59,6 @@ fun daysInMonth(month: Int, year: Int): Int {
         4, 6, 9, 11 -> 30
         else -> 31
     }
-}
 
 /**
  * Простая (2 балла)
@@ -84,4 +83,4 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
-    (minOf(a, b, c) <= minOf(r, s)) && (a + b + c - maxOf(a, b, c) - minOf(a, b, c) <= maxOf(r, s))
+    minOf(a, b, c) <= minOf(r, s) && a + b + c - maxOf(a, b, c) - minOf(a, b, c) <= maxOf(r, s)
