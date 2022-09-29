@@ -2,7 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -17,7 +17,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -88,12 +88,18 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int =
-    when (n) {
-        1 -> 1
-        2 -> 1
-        else -> fib(n - 1) + fib(n - 2)
+fun fib(n: Int): Int {
+    var answer = 1
+    var prev = 1
+    var preprev = 1
+    for (i in 3..n) {
+        answer = prev + preprev
+        preprev = prev
+        prev = answer
     }
+    return answer
+}
+
 
 /**
  * Простая (2 балла)
@@ -158,8 +164,11 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     when {
-        m == n -> return m
-        else -> for (i in 2..1000) if (i % m == 0 && i % n == 0) return i
+        m == n -> return n
+        m == 2 -> if (n % 2 == 0) return n else return (n * m)
+        n == 2 -> if (m % 2 == 0) return m else return (n * m)
+        else -> if (isPrime(n) || isPrime(m)) n * m else
+            for (i in 2..(Int.MAX_VALUE)) if (i % m == 0 && i % n == 0) return i
     }
     return -1
 }
@@ -171,7 +180,14 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var flag = true
+    when {
+        isPrime(m) && isPrime(n) -> flag = true
+        else -> for (i in 2..1000) if (m % i == 0 && n % i == 0) flag = false
+    }
+    return flag
+}
 
 /**
  * Средняя (3 балла)
@@ -180,7 +196,18 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    val len = digitNumber(n)
+    var number = n
+    var lastSymbol = 0
+    var answer = 0.0
+    for (i in len downTo 1) {
+        lastSymbol = number % 10
+        number /= 10
+        answer += 10.0.pow(i - 1) * lastSymbol
+    }
+    return answer.toInt()
+}
 
 /**
  * Средняя (3 балла)
@@ -192,6 +219,8 @@ fun revert(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean = TODO()
+
+
 
 /**
  * Средняя (3 балла)
