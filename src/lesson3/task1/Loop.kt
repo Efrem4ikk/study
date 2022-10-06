@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import com.sun.source.tree.WhileLoopTree
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -197,16 +198,13 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    val len = digitNumber(n)
     var number = n
-    var lastSymbol = 0
-    var answer = 0.0
-    for (i in len downTo 1) {
-        lastSymbol = number % 10
+    var reversed = 0
+    while (number > 0) {
+        reversed = reversed * 10 + number % 10
         number /= 10
-        answer += 10.0.pow(i - 1) * lastSymbol
     }
-    return answer.toInt()
+    return reversed
 }
 
 /**
@@ -218,8 +216,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
-
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 
 /**
@@ -230,7 +227,23 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    val lenght = digitNumber(n)
+    var flag = false
+    when (lenght) {
+        1 -> flag = false
+        2 -> if (n / 10 != n % 10) flag = true else flag = false
+        else -> for (i in 1..lenght - 2) {
+            val prelast = (n / 10.0.pow(i)).toInt() % 10
+            val last = (n / 10.0.pow(i + 1)).toInt() % 10
+            if (prelast != last) {
+                flag = true
+                break
+            }
+        }
+    }
+    return flag
+}
 
 /**
  * Средняя (4 балла)
@@ -241,7 +254,9 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    for (i in 1..Int.MAX_VALUE)
+}
 
 /**
  * Средняя (4 балла)
