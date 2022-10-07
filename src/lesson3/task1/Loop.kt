@@ -2,7 +2,6 @@
 
 package lesson3.task1
 
-import com.sun.source.tree.WhileLoopTree
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -166,10 +165,10 @@ fun collatzSteps(x: Int): Int {
 fun lcm(m: Int, n: Int): Int {
     when {
         m == n -> return n
-        m == 2 -> if (n % 2 == 0) return n else return (n * m)
-        n == 2 -> if (m % 2 == 0) return m else return (n * m)
-        else -> if (isPrime(n) || isPrime(m)) n * m else
-            for (i in 2..(Int.MAX_VALUE)) if (i % m == 0 && i % n == 0) return i
+        m == 2 -> return if (n % 2 == 0) n else n * 2
+        n == 2 -> return if (m % 2 == 0) m else m * 2
+        else -> if (isPrime(n) || isPrime(m)) return n * m else
+            for (i in 3..(Int.MAX_VALUE)) if (i % m == 0 && i % n == 0) return i
     }
     return -1
 }
@@ -228,12 +227,12 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    val lenght = digitNumber(n)
+    val length = digitNumber(n)
     var flag = false
-    when (lenght) {
+    when (length) {
         1 -> flag = false
         2 -> if (n / 10 != n % 10) flag = true else flag = false
-        else -> for (i in 1..lenght - 2) {
+        else -> for (i in 1..length - 2) {
             val prelast = (n / 10.0.pow(i)).toInt() % 10
             val last = (n / 10.0.pow(i + 1)).toInt() % 10
             if (prelast != last) {
@@ -255,7 +254,22 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    for (i in 1..Int.MAX_VALUE)
+    var sinus = x % (2 * PI)
+    val argument = sinus
+    var flag = false
+    for (i in 3..Int.MAX_VALUE step 2) {
+        val nextStep = argument.pow(i) / factorial(i)
+        if (abs(nextStep) >= abs(eps))
+            if (flag) {
+                flag = false
+                sinus += nextStep
+            } else {
+                flag = true
+                sinus -= nextStep
+            }
+        else break
+    }
+    return sinus
 }
 
 /**
@@ -267,7 +281,24 @@ fun sin(x: Double, eps: Double): Double {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var cosinus = 1.0
+    val argument = x % (2 * PI)
+    var flag = false
+    for (i in 2..Int.MAX_VALUE step 2) {
+        val nextStep = argument.pow(i) / factorial(i)
+        if (abs(nextStep) >= abs(eps))
+            if (flag) {
+                flag = false
+                cosinus += nextStep
+            } else {
+                flag = true
+                cosinus -= nextStep
+            }
+        else break
+    }
+    return cosinus
+}
 
 /**
  * Сложная (4 балла)
