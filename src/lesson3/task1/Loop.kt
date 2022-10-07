@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -162,16 +163,7 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    when {
-        m == n -> return n
-        m == 2 -> return if (n % 2 == 0) n else n * 2
-        n == 2 -> return if (m % 2 == 0) m else m * 2
-        else -> if (isPrime(n) || isPrime(m)) return n * m else
-            for (i in 3..(Int.MAX_VALUE)) if (i % m == 0 && i % n == 0) return i
-    }
-    return -1
-}
+fun lcm(m: Int, n: Int): Int = TODO()
 
 /**
  * Средняя (3 балла)
@@ -309,7 +301,21 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var lengthOfLine = 0
+    var i = 0
+    var lastNumber = 0
+    while (lengthOfLine < n) {
+        i += 1
+        lengthOfLine += digitNumber(sqr(i))
+        lastNumber = sqr(i)
+    }
+    while (lengthOfLine != n) {
+        lastNumber /= 10
+        lengthOfLine -= 1
+    }
+    return lastNumber % 10
+}
 
 /**
  * Сложная (5 баллов)
@@ -320,4 +326,18 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var lengthOfLine = 0
+    var i = 0
+    var lastNumber = 0
+    while (lengthOfLine < n) {
+        i += 1
+        lengthOfLine += digitNumber(fib(i))
+        lastNumber = fib(i)
+    }
+    while (lengthOfLine != n) {
+        lastNumber /= 10
+        lengthOfLine -= 1
+    }
+    return lastNumber % 10
+}
