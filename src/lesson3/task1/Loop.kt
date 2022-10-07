@@ -110,7 +110,7 @@ fun fib(n: Int): Int {
 fun minDivisor(n: Int): Int {
     return if (isPrime(n)) n else {
         for (i in 2..n) {
-            if ((n % i) == 0) return i
+            if (n % i == 0) return i
         }
         return -1
     }
@@ -124,7 +124,7 @@ fun minDivisor(n: Int): Int {
 fun maxDivisor(n: Int): Int {
     return if (isPrime(n)) 1 else {
         for (i in n - 1 downTo 2) {
-            if ((n % i) == 0) return i
+            if (n % i == 0) return i
         }
         return -1
     }
@@ -223,7 +223,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var flag = false
     when (length) {
         1 -> flag = false
-        2 -> if (n / 10 != n % 10) flag = true else flag = false
+        2 -> flag = n / 10 != n % 10
         else -> for (i in 1..length - 2) {
             val prelast = (n / 10.0.pow(i)).toInt() % 10
             val last = (n / 10.0.pow(i + 1)).toInt() % 10
