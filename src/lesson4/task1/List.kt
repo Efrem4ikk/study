@@ -255,34 +255,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val alphabet = listOf(
-        'a',
-        'b',
-        'c',
-        'd',
-        'e',
-        'f',
-        'g',
-        'h',
-        'i',
-        'j',
-        'k',
-        'l',
-        'm',
-        'n',
-        'o',
-        'p',
-        'q',
-        'r',
-        's',
-        't',
-        'u',
-        'v',
-        'w',
-        'x',
-        'y',
-        'z'
-    )
+    val alphabet = listOf('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
     val list = convert(n, base).toMutableList()
     var str = ""
     for (i in 0 until list.size) {
@@ -354,8 +327,13 @@ fun roman(n: Int): String {
  */
 fun russian(n: Int): String {
     if (n == 0) return "ноль"
+    val first = n / 100000
+    val second = n / 10000 % 10
+    val third = n / 1000 % 10
+    val fourth = n / 100 % 10
+    val fifth = n / 10 % 10
+    val sixth = n % 10
     val len = digitNumber(n)
-    var num = n
     val unit = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val teens = listOf(
         "десять",
@@ -396,15 +374,16 @@ fun russian(n: Int): String {
     val thousands = listOf("", "тысяча", "тысячи", "тысячи", "тысячи", "тысяч", "тысяч", "тысяч", "тысяч", "тысяч")
     val manyThousands = listOf("", "", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     var str = ""
-    if (len == 6) str += hundreds[n / 100000] + " "
-    if (len >= 5) if (n / 10000 % 10 != 0) str += (if (n / 10000 % 10 == 1) teens[n / 1000 % 10] else tys[n / 10000 % 10]) + " "
-    if (len >= 4) str += (if (n / 10000 % 10 != 1) manyThousands[n / 1000 % 10] + " " else "") + thousands[n / 1000 % 10]
-    if (len >= 3) {
-        str += if ((n / 100 % 10 != 0) and (n / 1000 != 0)) " " + hundreds[n / 100 % 10] else hundreds[n / 100 % 10]
+    if (len == 6) str += hundreds[first] + " "
+    if ((len >= 5) and (second != 0)) str += (if (second == 1) teens[third] + " " else tys[second] + " ")
+    if ((len >= 4) and (third != 0) and (second != 1)) str += manyThousands[third] + " "
+    if (n / 1000 > 0) {
+        str += if ((third == 0) or (second == 1)) "тысяч" else thousands[third]
     }
-    if (len >= 2) str += if ((n / 10 % 10 != 0) and (n / 100 != 0)) " " + if (n / 10 % 10 == 1) teens[n % 10] else tys[n / 10 % 10] else {
-        if (n / 10 % 10 == 1) teens[n % 10] else tys[n / 10 % 10]
+    if ((len >= 3) and (fourth != 0)) {
+        str += if (n / 1000 > 0) " " + hundreds[fourth] else hundreds[fourth]
     }
-    str += if (n / 10 != 0) " " + unit[n % 10] else unit[n % 10]
+    if ((len >= 2) and (fifth != 0)) str += (if (n / 100 > 0) " " else "") + if (fifth == 1) teens[sixth] else tys[fifth]
+    if (sixth != 0) str += if (fifth == 1) "" else (if (n / 10 > 0) " " else "") + unit[sixth]
     return str
 }
