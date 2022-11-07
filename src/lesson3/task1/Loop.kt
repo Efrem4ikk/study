@@ -109,8 +109,9 @@ fun fib(n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     return if (isPrime(n)) n else {
-        for (i in 2..n) {
-            if (n % i == 0) return i
+        val n = n * 1.0
+        for (i in 2..n.pow(0.5).toInt()) {
+            if (n.toInt() % i == 0) return i
         }
         return -1
     }
@@ -123,8 +124,9 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     return if (isPrime(n)) 1 else {
-        for (i in n - 1 downTo 2) {
-            if (n % i == 0) return i
+        val n = n * 1.0
+        for (i in (n - 1).toInt() downTo (n - 1).pow(0.5).toInt()) {
+            if (n.toInt() % i == 0) return i
         }
         return -1
     }
@@ -163,7 +165,16 @@ fun collatzSteps(x: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var n1 = n
+    var m1 = m
+    when {
+        n == m -> return n
+        isPrime(m) && isPrime(n) -> return m * n
+        else -> while (m1 != n1) if (n1 > m1) n1 -= m1 else m1 -= n1
+    }
+    return n * m / n1
+}
 
 /**
  * Средняя (3 балла)
@@ -173,12 +184,14 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var flag = true
+    var n = n
+    var m = m
     when {
-        isPrime(m) && isPrime(n) -> flag = true
-        else -> for (i in 2..1000) if (m % i == 0 && n % i == 0) flag = false
+        isPrime(m) && isPrime(n) -> return true
+        else -> while (m != n)
+            if (n > m) n -= m else m -= n
     }
-    return flag
+    return (n == 1)
 }
 
 /**
@@ -222,7 +235,6 @@ fun hasDifferentDigits(n: Int): Boolean {
     val length = digitNumber(n)
     var flag = false
     when (length) {
-        1 -> flag = false
         2 -> flag = n / 10 != n % 10
         else -> for (i in 1..length - 2) {
             val prelast = (n / 10.0.pow(i)).toInt() % 10
@@ -249,17 +261,18 @@ fun sin(x: Double, eps: Double): Double {
     var sinus = x % (2 * PI)
     val argument = sinus
     var flag = false
-    for (i in 3..Int.MAX_VALUE step 2) {
-        val nextStep = argument.pow(i) / factorial(i)
-        if (abs(nextStep) >= abs(eps))
-            if (flag) {
-                flag = false
-                sinus += nextStep
-            } else {
-                flag = true
-                sinus -= nextStep
-            }
-        else break
+    var i = 3
+    var nextStep = argument.pow(i) / factorial(i)
+    while (abs(nextStep) >= abs(eps)) {
+        if (flag) {
+            flag = false
+            sinus += nextStep
+        } else {
+            flag = true
+            sinus -= nextStep
+        }
+        i += 2
+        nextStep = argument.pow(i) / factorial(i)
     }
     return sinus
 }
@@ -277,17 +290,18 @@ fun cos(x: Double, eps: Double): Double {
     var cosinus = 1.0
     val argument = x % (2 * PI)
     var flag = false
-    for (i in 2..Int.MAX_VALUE step 2) {
-        val nextStep = argument.pow(i) / factorial(i)
-        if (abs(nextStep) >= abs(eps))
-            if (flag) {
-                flag = false
-                cosinus += nextStep
-            } else {
-                flag = true
-                cosinus -= nextStep
-            }
-        else break
+    var i = 2
+    var nextStep = argument.pow(i) / factorial(i)
+    while (abs(nextStep) >= abs(eps)) {
+        if (flag) {
+            flag = false
+            cosinus += nextStep
+        } else {
+            flag = true
+            cosinus -= nextStep
+        }
+        i += 2
+        nextStep = argument.pow(i) / factorial(i)
     }
     return cosinus
 }
