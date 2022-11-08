@@ -185,6 +185,30 @@ class Tests {
         assertEquals(listOf(1, 2, 1, 0), convert(100, 4))
         assertEquals(listOf(1, 3, 12), convert(250, 14))
         assertEquals(listOf(2, 14, 12), convert(1000, 19))
+        assertEquals(
+            listOf(
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+            ), convert(591256, 2)
+        )
     }
 
     @Test
@@ -196,6 +220,7 @@ class Tests {
         assertEquals("2ec", convertToString(1000, 19))
         assertEquals("z", convertToString(35, 36))
         assertEquals("a02220281", convertToString(Int.MAX_VALUE, 11))
+        assertEquals("10011100101010011001", convertToString(641689, 2))
     }
 
     @Test
@@ -240,5 +265,6 @@ class Tests {
         assertEquals("двенадцать", russian(12))
         assertEquals("сто один", russian(101))
         assertEquals("один", russian(1))
+        assertEquals("двести тридцать одна тысяча шестьдесят семь", russian(231067))
     }
 }

@@ -5,6 +5,8 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson3.task1.digitNumber
 import lesson3.task1.isPrime
+import lesson3.task1.maxDivisor
+import lesson3.task1.minDivisor
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -204,14 +206,14 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var i = 2
     var num = n
+    var i = minDivisor(num)
     val list = mutableListOf<Int>()
     while (num > 1) {
-        if (isPrime(num)) i = num else while (num % i != 0) i++
+        while (num % i != 0) i++
         list += i
         num /= i
-        i = 2
+        i = minDivisor(num)
     }
     return list
 }
@@ -223,7 +225,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = factorize(n).sorted().joinToString(separator = "*")
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
@@ -235,7 +237,7 @@ fun factorizeToString(n: Int): String = factorize(n).sorted().joinToString(separ
 fun convert(n: Int, base: Int): List<Int> {
     val list = mutableListOf<Int>()
     var num = n
-    while (num > base) {
+    while (num >= base) {
         list += num % base
         num /= base
     }
@@ -255,11 +257,10 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    val alphabet = listOf('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
-    val list = convert(n, base).toMutableList()
+    val list = convert(n, base)
     var str = ""
-    for (i in 0 until list.size) {
-        if (list[i] <= 9) str += list[i].toString() else str += alphabet[list[i] - 10]
+    for (i in 0 until list.size) if (list[i] <= 9) str += list[i].toString() else {
+        str += (list[i] + 87).toChar()
     }
     return str
 }
@@ -306,15 +307,16 @@ fun roman(n: Int): String {
     var num = n
     val numbers = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     val romanNumbers = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    var str = ""
+    var str = buildString { }
     var i = numbers.size - 1
     while (num > 0) {
         while (num >= numbers[i]) {
-            str += romanNumbers[i]
+            str += buildString { append(romanNumbers[i]) }
             num -= numbers[i]
         }
         i -= 1
     }
+
     return str
 }
 
@@ -372,7 +374,7 @@ fun russian(n: Int): String {
         "девятьсот"
     )
     val thousands = listOf("", "тысяча", "тысячи", "тысячи", "тысячи", "тысяч", "тысяч", "тысяч", "тысяч", "тысяч")
-    val manyThousands = listOf("", "", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val manyThousands = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     var str = ""
     if (len == 6) str += hundreds[first] + " "
     if ((len >= 5) and (second != 0)) str += (if (second == 1) teens[third] + " " else tys[second] + " ")

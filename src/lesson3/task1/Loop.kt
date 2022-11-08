@@ -109,9 +109,9 @@ fun fib(n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     return if (isPrime(n)) n else {
-        val n = n * 1.0
-        for (i in 2..n.pow(0.5).toInt()) {
-            if (n.toInt() % i == 0) return i
+        val num = n.toDouble()
+        for (i in 2..sqrt(num).toInt()) {
+            if (n % i == 0) return i
         }
         return -1
     }
@@ -122,15 +122,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    return if (isPrime(n)) 1 else {
-        val n = n * 1.0
-        for (i in (n - 1).toInt() downTo (n - 1).pow(0.5).toInt()) {
-            if (n.toInt() % i == 0) return i
-        }
-        return -1
-    }
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 
 /**
@@ -191,7 +183,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
         else -> while (m != n)
             if (n > m) n -= m else m -= n
     }
-    return (n == 1)
+    return n == 1
 }
 
 /**
@@ -240,8 +232,7 @@ fun hasDifferentDigits(n: Int): Boolean {
             val prelast = (n / 10.0.pow(i)).toInt() % 10
             val last = (n / 10.0.pow(i + 1)).toInt() % 10
             if (prelast != last) {
-                flag = true
-                break
+                return true
             }
         }
     }
