@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import java.util.*
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -218,8 +220,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     if (word == "") return true
     val chars = chars.toSet()
-    val word = word.toSet()
-    return chars == word
+    val word = word.lowercase().toSet()
+    for (elemet in word) if (!(elemet in chars)) return false
+    return true
 }
 
 /**
