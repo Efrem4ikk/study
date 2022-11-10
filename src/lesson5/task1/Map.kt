@@ -174,7 +174,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     val book = mapA.toMutableMap()
     for ((key, value) in mapB) {
         if (mapA[key].isNullOrEmpty()) book[key] = mapB[key]!!
-        else if (mapB[key] != mapA[key]) book[key] += ", $value"
+        else if (mapB[key] != mapA[key]) if (mapA[key] == "") book[key] += "value" else book[key] += ", $value"
     }
     return book
 }
@@ -222,7 +222,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     for (i in chars.indices) charintermed[i] = charintermed[i].lowercaseChar()
     val chars = charintermed.toSet()
     val word = word.lowercase().toSet()
-    for (elemet in word) if (!(elemet in chars)) return false
+    for (e in word) if (!(e in chars)) return false
     return true
 }
 
