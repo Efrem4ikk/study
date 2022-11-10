@@ -188,6 +188,13 @@ class Tests {
                 mapOf("Emergency" to "911", "Police" to "02")
             )
         )
+        assertEquals(
+            mapOf("Emergency" to "112, 911", "Police" to "02, 112"),
+            mergePhoneBooks(
+                mapOf("Emergency" to "112", "Police" to "02", "Poolice" to " "),
+                mapOf("Emergency" to "911", "Police" to "02", "Poolice" to "03")
+            )
+        )
     }
 
     @Test
@@ -238,6 +245,7 @@ class Tests {
         assertTrue(canBuildFrom(listOf('a', 'm', 'r'), ""))
         assertTrue(canBuildFrom(listOf('a', 'm', 'r'), "A"))
         assertTrue(canBuildFrom(listOf('a', 'm', 'z'), "AmAaaaAMAAmmAM"))
+        assertTrue(canBuildFrom(listOf('A', 'm', 'r'), "a"))
     }
 
     @Test
