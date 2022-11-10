@@ -2,7 +2,6 @@
 
 package lesson5.task1
 
-import java.util.*
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -174,7 +173,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     val book = mapA.toMutableMap()
     for ((key, value) in mapB) {
         if (mapA[key].isNullOrEmpty()) book[key] = mapB[key]!!
-        else if (mapB[key] != mapA[key]) if (mapA[key] == "") book[key] += "value" else book[key] += ", $value"
+        else if (mapB[key] != mapA[key]) if (mapA[key] == "") book[key] += value else book[key] += ", $value"
     }
     return book
 }
@@ -189,7 +188,16 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val listOfShares = stockPrices.groupBy({ it.first }, { (it.second) })
+    val amountOfShares = listOfShares.mapValues { it.value.sum() }
+    val ans = mutableMapOf<String, Double>()
+    for ((key, value) in amountOfShares) {
+        ans[key] = value / listOfShares[key]!!.size
+    }
+    return ans
+}
+
 //groupBy
 /**
  * Средняя (4 балла)
@@ -206,7 +214,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
@@ -222,7 +230,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     for (i in chars.indices) charintermed[i] = charintermed[i].lowercaseChar()
     val chars = charintermed.toSet()
     val word = word.lowercase().toSet()
-    for (e in word) if (!(e in chars)) return false
+    for (e in word) if (e !in chars) return false
     return true
 }
 

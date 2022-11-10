@@ -189,10 +189,10 @@ class Tests {
             )
         )
         assertEquals(
-            mapOf("Emergency" to "112, 911", "Police" to "02, 112"),
+            mapOf("" to "V", "%" to "| V!^m'Ty"),
             mergePhoneBooks(
-                mapOf("Emergency" to "112", "Police" to "02", "Poolice" to " "),
-                mapOf("Emergency" to "911", "Police" to "02", "Poolice" to "03")
+                mapOf("" to ""),
+                mapOf("" to "V", "%" to "| V!^m'Ty")
             )
         )
     }
