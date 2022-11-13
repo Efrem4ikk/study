@@ -198,7 +198,6 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     return ans
 }
 
-//groupBy
 /**
  * Средняя (4 балла)
  *
@@ -214,7 +213,17 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var minPrice = Double.MAX_VALUE
+    var nameOfStuff = ""
+    for ((name, information) in stuff) {
+        if ((information.first == kind) and (information.second < minPrice)) {
+            minPrice = information.second
+            nameOfStuff = name
+        }
+    }
+    return if (nameOfStuff == "") null else nameOfStuff
+}
 
 /**
  * Средняя (3 балла)
@@ -246,7 +255,16 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val ans = mutableMapOf<String, Int>()
+    for (i in list) {
+        if (ans[i] == null) ans[i] = 1 else ans[i] = (ans[i]!! + 1)
+    }
+    val forDelete = mutableListOf<String>()
+    for ((key, value) in ans) if (value == 1) forDelete.add(key)
+    for (i in forDelete) ans.remove(i)
+    return ans
+}
 
 /**
  * Средняя (3 балла)
@@ -260,7 +278,14 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    for (i in 0 until words.size) {
+        for (j in i + 1 until words.size) {
+            if ((words[i].length == words[j].length) and (words[i].toSet() == words[j].toSet())) return true
+        }
+    }
+    return false
+}
 
 /**
  * Сложная (5 баллов)
@@ -315,7 +340,17 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val mList = list.toMutableList<Int>()
+    var ans = Pair(-1, -1)
+    for (i in list) {
+        val remind = number - i
+        mList.remove(i)
+        if ((remind in mList) and (remind >= 0)) ans =
+            Pair(minOf(list.indexOf(i), list.indexOf(remind)), maxOf(list.indexOf(i), list.indexOf(remind)))
+    }
+    return ans
+}
 
 /**
  * Очень сложная (8 баллов)
