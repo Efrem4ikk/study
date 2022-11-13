@@ -189,7 +189,7 @@ class Tests {
             )
         )
         assertEquals(
-            mapOf("" to "V", "%" to "| V!^m'Ty"),
+            mapOf("" to ", V", "%" to "| V!^m'Ty"),
             mergePhoneBooks(
                 mapOf("" to ""),
                 mapOf("" to "V", "%" to "| V!^m'Ty")

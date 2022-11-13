@@ -260,7 +260,7 @@ fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
     var str = ""
     for (i in 0 until list.size) if (list[i] <= 9) str += list[i].toString() else {
-        str += (list[i] + 87).toChar()
+        str += 'a' + (list[i] - 10)
     }
     return str
 }
@@ -311,7 +311,10 @@ fun roman(n: Int): String {
     var i = numbers.size - 1
     while (num > 0) {
         while (num >= numbers[i]) {
-            str += buildString { append(romanNumbers[i]) }
+            str = buildString {
+                append(str)
+                append(romanNumbers[i])
+            }
             num -= numbers[i]
         }
         i -= 1
