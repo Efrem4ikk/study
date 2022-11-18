@@ -210,9 +210,10 @@ fun factorize(n: Int): List<Int> {
     var i = minDivisor(num)
     val list = mutableListOf<Int>()
     while (num > 1) {
-        while (num % i != 0) i++
-        list += i
-        num /= i
+        while (num % i == 0) {
+            list += i
+            num /= i
+        }
         i = minDivisor(num)
     }
     return list
@@ -260,7 +261,7 @@ fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
     var str = ""
     for (i in 0 until list.size) if (list[i] <= 9) str += list[i].toString() else {
-        str += 'a' + (list[i] - 10)
+        str += (list[i] + 87).toChar()
     }
     return str
 }
@@ -311,10 +312,7 @@ fun roman(n: Int): String {
     var i = numbers.size - 1
     while (num > 0) {
         while (num >= numbers[i]) {
-            str = buildString {
-                append(str)
-                append(romanNumbers[i])
-            }
+            str += buildString { append(romanNumbers[i]) }
             num -= numbers[i]
         }
         i -= 1

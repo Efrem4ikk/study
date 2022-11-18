@@ -189,7 +189,7 @@ class Tests {
             )
         )
         assertEquals(
-            mapOf("" to ", V", "%" to "| V!^m'Ty"),
+            mapOf("" to "V", "%" to "| V!^m'Ty"),
             mergePhoneBooks(
                 mapOf("" to ""),
                 mapOf("" to "V", "%" to "| V!^m'Ty")
@@ -326,6 +326,10 @@ class Tests {
         assertEquals(
             Pair(-1, -1),
             findSumOfTwo(listOf(1, 2, 3), 6)
+        )
+        assertEquals(
+            Pair(2, 3),
+            findSumOfTwo(listOf(2, 2, 2, 4, 4, 4, 6, 8, 8), 6)
         )
     }
 
