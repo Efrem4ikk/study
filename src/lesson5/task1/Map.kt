@@ -281,12 +281,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
 fun hasAnagrams(words: List<String>): Boolean {
     val sorted = words.map { it.toList().sorted() }
     return sorted.size != sorted.toSet().size
-//    for (i in words.indices) {
-//        for (j in i + 1 until words.size) {
-//            if ((words[i].length == words[j].length) and (words[i].toSet() == words[j].toSet())) return true
-//        }
-//    }
-//    return false
 }
 
 /**
