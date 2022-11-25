@@ -4,8 +4,6 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.digitNumber
-import lesson3.task1.isPrime
-import lesson3.task1.maxDivisor
 import lesson3.task1.minDivisor
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -260,8 +258,14 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
     var str = ""
-    for (i in 0 until list.size) if (list[i] <= 9) str += list[i].toString() else {
-        str += (list[i] + 87).toChar()
+    for (i in list.indices) str = if (list[i] <= 9) buildString {
+        append(str)
+        append(list[i].toString())
+    } else {
+        buildString {
+            append(str)
+            append((list[i] + 87).toChar())
+        }
     }
     return str
 }
@@ -311,13 +315,15 @@ fun roman(n: Int): String {
     var str = buildString { }
     var i = numbers.size - 1
     while (num > 0) {
-        while (num >= numbers[i]) {
-            str += buildString { append(romanNumbers[i]) }
-            num -= numbers[i]
+        str = buildString {
+            append(str)
+            while (num >= numbers[i]) {
+                append(romanNumbers[i])
+                num -= numbers[i]
+            }
+            i--
         }
-        i -= 1
     }
-
     return str
 }
 
