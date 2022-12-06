@@ -257,15 +257,10 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base)
-    var str = ""
-    for (i in list.indices) str = if (list[i] <= 9) buildString {
-        append(str)
-        append(list[i].toString())
-    } else {
-        buildString {
-            append(str)
-            append((list[i] + 87).toChar())
-        }
+    val str = buildString {
+        for (i in list.indices)
+            if (list[i] <= 9) append(list[i].toString())
+            else append('a' + list[i] - 10)
     }
     return str
 }
@@ -312,11 +307,9 @@ fun roman(n: Int): String {
     var num = n
     val numbers = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     val romanNumbers = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    var str = buildString { }
     var i = numbers.size - 1
-    while (num > 0) {
-        str = buildString {
-            append(str)
+    val str = buildString {
+        while (num > 0) {
             while (num >= numbers[i]) {
                 append(romanNumbers[i])
                 num -= numbers[i]
@@ -380,7 +373,8 @@ fun russian(n: Int): String {
         "восемьсот",
         "девятьсот"
     )
-    val thousands = listOf("", "тысяча", "тысячи", "тысячи", "тысячи", "тысяч", "тысяч", "тысяч", "тысяч", "тысяч")
+    val thousands =
+        listOf("", "тысяча", "тысячи", "тысячи", "тысячи", "тысяч", "тысяч", "тысяч", "тысяч", "тысяч")
     val manyThousands = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     var str = ""
     if (len == 6) str += hundreds[first] + " "
