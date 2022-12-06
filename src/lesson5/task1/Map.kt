@@ -190,12 +190,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val listOfShares = stockPrices.groupBy({ it.first }, { it.second })
-    val amountOfShares = listOfShares.mapValues { it.value.sum() }
-    val ans = mutableMapOf<String, Double>()
-    for ((key, value) in amountOfShares) {
-        ans[key] = value / listOfShares[key]!!.size
-    }
-    return ans
+    return listOfShares.mapValues { it.value.sum() / it.value.size }
 }
 
 /**
@@ -235,8 +230,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val charintermed = chars.toMutableList()
-    for (i in chars.indices) charintermed[i] = charintermed[i].lowercaseChar()
+    val charintermed = chars.toMutableList().map { it.lowercaseChar() }
     val chars = charintermed.toSet()
     val word = word.lowercase().toSet()
     for (e in word) if (e !in chars) return false
