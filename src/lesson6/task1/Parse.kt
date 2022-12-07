@@ -209,15 +209,9 @@ fun plusMinus(expression: String): Int {
  */
 fun firstDuplicateIndex(str: String): Int {
     val list = str.lowercase().split(" ")
-    var ans = -1
-    if (list.size > 1) {
-        for (i in (0..list.size - 2)) {
-            if (list[i] == list[i + 1]) return ans + 1 else {
-                ans += list[i].length + 1
-            }
-        }
-    } else return -1
-    return ans
+    var ans = 0
+    for (i in (0..list.size - 2)) if (list[i] == list[i + 1]) return ans else ans += list[i].length + 1
+    return -1
 }
 
 /**
