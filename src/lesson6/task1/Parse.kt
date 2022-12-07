@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import ru.spbstu.wheels.Continue
+import java.time.Year
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +78,18 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val months = listOf<String>(
+        "", "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    )
+    if (!str.matches(Regex("""\d+ [а-я]+ \d+"""))) return ""
+    var (day, month, year) = str.split(" ")
+    if (day == "" || month == "" || year == "") return ""
+    if (month in months) month = months.indexOf(month).toString() else return ""
+    if (day.toInt() > daysInMonth(month.toInt(), year.toInt())) return ""
+    return String.format("%02d.%02d.%d", day.toInt(), month.toInt(), year.toInt())
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +101,9 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    if (!digital.matches(Regex("""\d+ [а-я]+ \d+"""))) return ""
+}
 
 /**
  * Средняя (4 балла)
