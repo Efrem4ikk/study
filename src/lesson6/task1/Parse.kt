@@ -6,6 +6,7 @@ import lesson2.task2.daysInMonth
 import ru.spbstu.kotlin.generate.combinators.shrinkMany
 import ru.spbstu.wheels.Continue
 import java.time.Year
+import java.lang.IllegalArgumentException as IllegalArgumentException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -186,7 +187,19 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!expression.matches(Regex("""(\d+ [+-] )*\d+"""))) throw IllegalArgumentException()
+    val express = expression.split(" ")
+    var ans = express.first().toInt()
+    for (i in express.indices) {
+        ans += when (express[i]) {
+            "+" -> express[i + 1].toInt()
+            "-" -> -express[i + 1].toInt()
+            else -> 0
+        }
+    }
+    return ans
+}
 
 /**
  * Сложная (6 баллов)
@@ -197,7 +210,18 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val list = str.lowercase().split(" ")
+    var ans = -1
+    if (list.size > 1) {
+        for (i in list.indices) {
+            if (list[i] == list[i + 1]) return ans + 1 else {
+                ans += list[i].length + 1
+            }
+        }
+    } else return -1
+    return ans
+}
 
 /**
  * Сложная (6 баллов)
