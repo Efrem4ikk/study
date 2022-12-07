@@ -3,9 +3,6 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import ru.spbstu.kotlin.generate.combinators.shrinkMany
-import ru.spbstu.wheels.Continue
-import java.time.Year
 import java.lang.IllegalArgumentException as IllegalArgumentException
 
 // Урок 6: разбор строк, исключения
@@ -81,7 +78,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val months = listOf<String>(
+    val months = listOf(
         "", "января", "февраля", "марта", "апреля", "мая", "июня",
         "июля", "августа", "сентября", "октября", "ноября", "декабря"
     )
@@ -105,7 +102,7 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     if (!digital.matches(Regex("""\d{2}\.\d{2}\.\d+"""))) return ""
-    val months = listOf<String>(
+    val months = listOf(
         "", "января", "февраля", "марта", "апреля", "мая", "июня",
         "июля", "августа", "сентября", "октября", "ноября", "декабря"
     )
