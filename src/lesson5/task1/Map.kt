@@ -230,7 +230,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    val charintermed = chars.toMutableList().map { it.lowercaseChar() }
+    val charintermed = chars.toList().map { it.lowercaseChar() }
     val chars = charintermed.toSet()
     val word = word.lowercase().toSet()
     for (e in word) if (e !in chars) return false
@@ -252,7 +252,8 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
 fun extractRepeats(list: List<String>): Map<String, Int> {
     val ans = mutableMapOf<String, Int>()
     for (i in list) {
-        if (ans[i] == null) ans[i] = 1 else ans[i] = (ans[i]!! + 1)
+        val currentLetter = ans[i]
+        ans[i] = if (currentLetter == null) 1 else (currentLetter + 1)
     }
     val forDelete = mutableListOf<String>()
     for ((key, value) in ans) if (value == 1) forDelete.add(key)
