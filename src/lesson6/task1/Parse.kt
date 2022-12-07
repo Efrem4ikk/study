@@ -110,7 +110,7 @@ fun dateDigitToStr(digital: String): String {
     )
     val (day, month, year) = digital.split(".")
     if (day.toInt() == 0 || month.toInt() == 0 || year.toInt() == 0) return ""
-    if (day.toInt() > daysInMonth(month.toInt(), year.toInt())) return ""
+    if (day.toInt() > daysInMonth(month.toInt(), year.toInt()) || month.toInt() > 12) return ""
     return day.toInt().toString() + " " + months[month.toInt()] + " " + year
 }
 
