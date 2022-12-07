@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import ru.spbstu.kotlin.generate.combinators.shrinkMany
 import ru.spbstu.wheels.Continue
 import java.time.Year
 
@@ -102,7 +103,15 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    if (!digital.matches(Regex("""\d+ [а-я]+ \d+"""))) return ""
+    if (!digital.matches(Regex("""\d{2}\.\d{2}\.\d{4}"""))) return ""
+    val months = listOf<String>(
+        "", "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    )
+    val (day, month, year) = digital.split(".")
+    if (day.toInt() == 0 || month.toInt() == 0 || year.toInt() == 0) return ""
+    if (day.toInt() > daysInMonth(month.toInt(), year.toInt())) return ""
+    return day.toInt().toString() + " " + months[month.toInt()] + " " + year
 }
 
 /**
@@ -131,7 +140,18 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val list = jumps.split(" ")
+    val successfulJumps = mutableListOf<Int>()
+    for (i in list.indices) {
+        successfulJumps += when {
+            list[i].matches(Regex("""\d+""")) -> list[i].toInt()
+            list[i].matches(Regex("""[%-]""")) -> 0
+            else -> return -1
+        }
+    }
+    return if (successfulJumps.sum() == 0) -1 else successfulJumps.max()
+}
 
 /**
  * Сложная (6 баллов)
@@ -144,7 +164,18 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val list = jumps.split(" ")
+    val successfulJumps = mutableListOf<Int>()
+    for (i in list.indices) {
+        successfulJumps += when {
+            list[i].matches(Regex("""\d+""")) -> if (list[i + 1] == "+") list[i].toInt() else 0
+            list[i].matches(Regex("""[%+-]+""")) -> 0
+            else -> return -1
+        }
+    }
+    return if (successfulJumps.sum() == 0) -1 else successfulJumps.max()
+}
 
 /**
  * Сложная (6 баллов)
