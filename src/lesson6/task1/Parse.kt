@@ -168,7 +168,7 @@ fun bestHighJump(jumps: String): Int {
     val successfulJumps = mutableListOf<Int>()
     for (i in list.indices) {
         successfulJumps += when {
-            list[i].matches(Regex("""\d+""")) -> if (list[i + 1] == "+") list[i].toInt() else 0
+            list[i].matches(Regex("""\d+""")) -> if (list[i + 1].matches(Regex("""[%+-]*\++[%+-]*"""))) list[i].toInt() else 0
             list[i].matches(Regex("""[%+-]+""")) -> -1
             else -> return -1
         }
