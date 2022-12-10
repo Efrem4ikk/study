@@ -152,10 +152,6 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
     }
-//
-//    @Test
-//    fun myFun() {
-//        assertEquals(13000, myFun("20000 у.е. - 0%; 40000 у.е. - 5%; 60000 у.е. - 10%; else - 25%", 100000))
-    }
 }
+
 

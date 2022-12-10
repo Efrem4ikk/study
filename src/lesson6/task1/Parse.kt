@@ -83,11 +83,12 @@ fun dateStrToDigit(str: String): String {
         "июля", "августа", "сентября", "октября", "ноября", "декабря"
     )
     if (!str.matches(Regex("""\d+ [а-я]+ \d+"""))) return ""
-    var (day, month, year) = str.split(" ")
+    val (day, month, year) = str.split(" ")
     if (day == "" || month == "" || year == "") return ""
-    if (month in months) month = months.indexOf(month).toString() else return ""
-    if (day.toInt() > daysInMonth(month.toInt(), year.toInt())) return ""
-    return String.format("%02d.%02d.%d", day.toInt(), month.toInt(), year.toInt())
+    val monthNumber = months.indexOf(month)
+    if (monthNumber == -1) return ""
+    if (day.toInt() > daysInMonth(monthNumber, year.toInt())) return ""
+    return String.format("%02d.%02d.%d", day.toInt(), monthNumber, year.toInt())
 }
 
 /**
@@ -144,11 +145,11 @@ fun bestLongJump(jumps: String): Int {
     for (i in list.indices) {
         successfulJumps += when {
             list[i].matches(Regex("""\d+""")) -> list[i].toInt()
-            list[i].matches(Regex("""[%-]""")) -> 0
+            list[i].matches(Regex("""[%-]""")) -> -1
             else -> return -1
         }
     }
-    return if (successfulJumps.sum() == 0) -1 else successfulJumps.max()
+    return successfulJumps.max()
 }
 
 /**
@@ -168,11 +169,11 @@ fun bestHighJump(jumps: String): Int {
     for (i in list.indices) {
         successfulJumps += when {
             list[i].matches(Regex("""\d+""")) -> if (list[i + 1] == "+") list[i].toInt() else 0
-            list[i].matches(Regex("""[%+-]+""")) -> 0
+            list[i].matches(Regex("""[%+-]+""")) -> -1
             else -> return -1
         }
     }
-    return if (successfulJumps.sum() == 0) -1 else successfulJumps.max()
+    return successfulJumps.max()
 }
 
 /**
