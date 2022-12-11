@@ -92,8 +92,8 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
             for (letterstart in str.indices) {
                 var newWord = ""
                 for (letterend in letterstart until str.length) {
-                    newWord += str[letterend]
-                    if (newWord == word) counter += 1
+                    newWord += str[letterend].lowercaseChar()
+                    if (newWord == word.lowercase()) counter += 1
                 }
             }
         }
