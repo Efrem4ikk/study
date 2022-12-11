@@ -89,7 +89,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     for (word in substrings) {
         var counter = 0
         for (str in File(inputName).readLines()) {
-            counter += str.lowercase().split(word.lowercase()).size - 1
+            counter += Regex(word.lowercase()).findAll(str.lowercase()).count()
         }
         ans[word] = counter
     }
