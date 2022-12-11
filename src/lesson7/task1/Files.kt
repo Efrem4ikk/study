@@ -121,8 +121,8 @@ fun sibilants(inputName: String, outputName: String) {
                         'Я' -> it.write("А")
                         'Ю' -> it.write("У")
                         'ы' -> it.write("и")
-                        'я' -> it.write("я")
-                        'ю' -> it.write("ю")
+                        'я' -> it.write("а")
+                        'ю' -> it.write("у")
                         else -> it.write(letter.toString())
                     }
                 } else it.write(letter.toString())
