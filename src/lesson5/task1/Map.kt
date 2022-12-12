@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson7.task1.sibilants
+
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -208,17 +210,18 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var minPrice = Double.MAX_VALUE
-    var nameOfStuff: String? = null
-    for ((name, information) in stuff) {
-        if ((information.first == kind) && (information.second < minPrice)) {
-            minPrice = information.second
-            nameOfStuff = name
-        }
-    }
-    return nameOfStuff
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
+//{
+//    var minPrice = Double.MAX_VALUE
+//    var nameOfStuff: String? = null
+//    for ((name, information) in stuff) {
+//        if ((information.first == kind) && (information.second < minPrice)) {
+//            minPrice = information.second
+//            nameOfStuff = name
+//        }
+//    }
+//    return nameOfStuff
+//}
 
 /**
  * Средняя (3 балла)
@@ -366,4 +369,25 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val treasures = treasures.toMutableMap()
+    val ans = mutableSetOf<String>()
+    var leftCapacity = capacity
+    while (leftCapacity > 0) {
+        if (treasures.isEmpty()) break
+        var maxim = -1
+        var name = ""
+        for (i in 0 until treasures.size) {
+            if (treasures.entries.toList()[i].value.first > maxim) {
+                maxim = treasures.entries.toList()[i].value.first
+                name = treasures.entries.toList()[i].key
+            }
+        }
+        if (maxim <= leftCapacity) {
+            ans += name
+            leftCapacity -= maxim
+            treasures.remove(name)
+        } else treasures.remove(name)
+    }
+    return ans
+}
