@@ -375,17 +375,19 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     var leftCapacity = capacity
     while (leftCapacity > 0) {
         if (treasures.isEmpty()) break
-        var maxim = -1
+        var maximCost = -1
+        var weight = -1
         var name = ""
         for (i in 0 until treasures.size) {
-            if (treasures.entries.toList()[i].value.first > maxim) {
-                maxim = treasures.entries.toList()[i].value.first
+            if (treasures.entries.toList()[i].value.second > maximCost) {
+                maximCost = treasures.entries.toList()[i].value.second
+                weight = treasures.entries.toList()[i].value.first
                 name = treasures.entries.toList()[i].key
             }
         }
-        if (maxim <= leftCapacity) {
+        if (weight <= leftCapacity) {
             ans += name
-            leftCapacity -= maxim
+            leftCapacity -= weight
             treasures.remove(name)
         } else treasures.remove(name)
     }
