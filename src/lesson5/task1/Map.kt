@@ -377,9 +377,9 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         var sumOfweight = 0
         val list = mutableSetOf<String>()
         for (j in 0 until treasures.size) {
-            sumOfweight += treasures.entries.toList()[i].value.first
-            sumOfCoust += treasures.entries.toList()[i].value.second
-            list += treasures.entries.toList()[i].key
+            sumOfweight += treasures.entries.toList()[j].value.first
+            sumOfCoust += treasures.entries.toList()[j].value.second
+            list += treasures.entries.toList()[j].key
             if (sumOfweight > capacity) break
             if (sumOfCoust > maxCost) {
                 maxCost = sumOfCoust
