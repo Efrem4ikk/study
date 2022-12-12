@@ -369,26 +369,27 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    var maxCost = -1
-    val ans = mutableSetOf<String>()
-    for (i in 0 until treasures.size) {
-        var sumOfCoust = 0
-        var sumOfweight = 0
-        val list = mutableSetOf<String>()
-        for (j in 0 until treasures.size) {
-            sumOfweight += treasures.entries.toList()[j].value.first
-            sumOfCoust += treasures.entries.toList()[j].value.second
-            list += treasures.entries.toList()[j].key
-            if (sumOfweight > capacity) break
-            if (sumOfCoust > maxCost) {
-                maxCost = sumOfCoust
-                ans += list
-            }
-        }
-    }
-    return ans
-}
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+//{
+//    var maxCost = -1
+//    val ans = mutableSetOf<String>()
+//    for (i in 0 until treasures.size) {
+//        var sumOfCost = 0
+//        var sumOfweight = 0
+//        val list = mutableSetOf<String>()
+//        for (j in 0 until treasures.size) {
+//            sumOfweight += treasures.entries.toList()[j].value.first
+//            sumOfCost += treasures.entries.toList()[j].value.second
+//            list += treasures.entries.toList()[j].key
+//            if (sumOfweight > capacity) break
+//            if (sumOfCost > maxCost) {
+//                maxCost = sumOfCost
+//                ans += list
+//            }
+//        }
+//    }
+//    return ans
+//}
 
 
 //    val treasures = treasures.toMutableMap()
