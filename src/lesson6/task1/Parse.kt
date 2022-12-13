@@ -278,32 +278,3 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
-
-
-//fun myFun(taxes: String, money: Int): Int {
-//    if (!taxes.matches(Regex("""(\d+ у.е. - \d+%; )+else - \d+%"""))) throw IllegalArgumentException()
-//    var ans = 0
-//    val list = taxes.split(" ")
-//    val amounts = mutableListOf<Int>(0)
-//    val percentages = mutableListOf<Int>(0)
-//    var elses = 0
-//    for (i in list.indices) {
-//        val now = list[i]
-//        when {
-//            now.matches(Regex("""\d+""")) -> amounts += now.toInt()
-//            now.matches(Regex("""\d+%;""")) -> percentages += now.substring(0, now.length - 2).toInt()
-//            now.matches(Regex("""\d+%""")) -> elses = now.substring(0, now.length - 1).toInt()
-//        }
-//    }
-//    for (i in 1 until amounts.size) {
-//        if (money >= amounts[i]) {
-//            ans += (amounts[i] - amounts[i - 1]) * percentages[i] / 100
-//        } else {
-//            ans += (money - amounts[i - 1]) * percentages[i] / 100
-//            break
-//        }
-//    }
-//    val excess = money - amounts.last()
-//    if (excess > 0) ans += excess * elses / 100
-//    return ans
-//}

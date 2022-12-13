@@ -188,13 +188,6 @@ class Tests {
                 mapOf("Emergency" to "911", "Police" to "02")
             )
         )
-        assertEquals(
-            mapOf("" to "V", "%" to "| V!^m'Ty"),
-            mergePhoneBooks(
-                mapOf("" to ""),
-                mapOf("" to "V", "%" to "| V!^m'Ty")
-            )
-        )
     }
 
     @Test
@@ -336,6 +329,20 @@ class Tests {
     @Test
     @Tag("8")
     fun bagPacking() {
+        assertEquals(
+            setOf("Кубок"),
+            bagPacking(
+                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+                850
+            )
+        )
+        assertEquals(
+            emptySet<String>(),
+            bagPacking(
+                mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
+                450
+            )
+        )
         assertEquals(
             setOf("1"),
             bagPacking(
