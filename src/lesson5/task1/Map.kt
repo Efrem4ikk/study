@@ -369,7 +369,27 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String>
+//{
+//    val w = listOf(0) + treasures.values.map { it.first }
+//    val c = listOf(0) + treasures.values.map { it.second }
+//    val d = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
+//    val indexInBag = MutableList(treasures.size + 1) { MutableList(capacity + 1) { mutableSetOf<String>() } }
+//
+//    for (i in 1..treasures.size) {
+//        for (j in 0..capacity) {
+//            if (j - w[i] >= 0 && d[i - 1][j - w[i]] + c[i] > d[i - 1][j]) {
+//                d[i][j] = d[i - 1][j - w[i]] + c[i]
+//                indexInBag[i][j] += indexInBag[i - 1][j - w[i]] + treasures.entries.toList()[i - 1].key
+//            } else {
+//                d[i][j] = d[i - 1][j]
+//                indexInBag[i][j] += indexInBag[i - 1][j]
+//            }
+//        }
+//    }
+//    return indexInBag[treasures.size][capacity]
+//}
+{
     val weight = listOf(0) + treasures.values.map { it.first }
     val cost = listOf(0) + treasures.values.map { it.second }
     val table = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
@@ -380,8 +400,10 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                 table[i][j] = table[i - 1][j]
                 bag[i][j] += bag[i - 1][j]
             } else {
-                table[i][j] = maxOf(table[i - 1][j], table[i - 1][j - weight[i]] + cost[i])
-                bag[i][j] += bag[i - 1][j - weight[i]] + treasures.entries.toList()[i - 1].key
+                if (table[i - 1][j - weight[i]] + cost[i] > table[i - 1][j]) {
+                    table[i][j] = table[i - 1][j - weight[i]] + cost[i]
+                    bag[i][j] += bag[i - 1][j - weight[i]] + treasures.entries.toList()[i - 1].key
+                }
             }
         }
     }
