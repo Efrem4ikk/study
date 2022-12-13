@@ -2,8 +2,6 @@
 
 package lesson5.task1
 
-import lesson7.task1.sibilants
-
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -369,69 +367,22 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String>
-//{
-//    val w = listOf(0) + treasures.values.map { it.first }
-//    val c = listOf(0) + treasures.values.map { it.second }
-//    val d = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
-//    val indexInBag = MutableList(treasures.size + 1) { MutableList(capacity + 1) { mutableSetOf<String>() } }
-//
-//    for (i in 1..treasures.size) {
-//        for (j in 0..capacity) {
-//            if (j - w[i] >= 0 && d[i - 1][j - w[i]] + c[i] > d[i - 1][j]) {
-//                d[i][j] = d[i - 1][j - w[i]] + c[i]
-//                indexInBag[i][j] += indexInBag[i - 1][j - w[i]] + treasures.entries.toList()[i - 1].key
-//            } else {
-//                d[i][j] = d[i - 1][j]
-//                indexInBag[i][j] += indexInBag[i - 1][j]
-//            }
-//        }
-//    }
-//    return indexInBag[treasures.size][capacity]
-//}
-{
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
     val weight = listOf(0) + treasures.values.map { it.first }
     val cost = listOf(0) + treasures.values.map { it.second }
     val table = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
-    val bag = MutableList(treasures.size + 1) { MutableList(capacity + 1) { mutableSetOf<String>() } }
+    val bag = MutableList(treasures.size + 1) { MutableList(capacity + 1) { emptySet<String>() } }
     for (i in 1..treasures.size) {
-        for (j in 0..capacity) {
-            if (weight[i] > j) {
+        for (j in 1..capacity) {
+            if ((weight[i] > j)) {
                 table[i][j] = table[i - 1][j]
                 bag[i][j] += bag[i - 1][j]
             } else {
-                if (table[i - 1][j - weight[i]] + cost[i] > table[i - 1][j]) {
-                    table[i][j] = table[i - 1][j - weight[i]] + cost[i]
-                    bag[i][j] += bag[i - 1][j - weight[i]] + treasures.entries.toList()[i - 1].key
-                }
+                table[i][j] = maxOf(table[i - 1][j - weight[i]] + cost[i], table[i - 1][j])
+                if (table[i][j] != table[i - 1][j]) bag[i][j] += bag[i - 1][j - weight[i]] + treasures.entries.toList()[i - 1].key
+                else bag[i][j] += bag[i - 1][j]
             }
         }
     }
     return bag[treasures.size][capacity]
 }
-
-
-// Жадный алогитм(не работает)
-//    val treasures = treasures.toMutableMap()
-//    val ans = mutableSetOf<String>()
-//    var leftCapacity = capacity
-//    while (leftCapacity > 0) {
-//        if (treasures.isEmpty()) break
-//        var maximCost = -1
-//        var weight = -1
-//        var name = ""
-//        for (i in 0 until treasures.size) {
-//            if (treasures.entries.toList()[i].value.second > maximCost) {
-//                maximCost = treasures.entries.toList()[i].value.second
-//                weight = treasures.entries.toList()[i].value.first
-//                name = treasures.entries.toList()[i].key
-//            }
-//        }
-//        if (weight <= leftCapacity) {
-//            ans += name
-//            leftCapacity -= weight
-//            treasures.remove(name)
-//        } else treasures.remove(name)
-//    }
-//    return ans
-//}
