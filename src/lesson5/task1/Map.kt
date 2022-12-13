@@ -386,3 +386,4 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     }
     return bag[treasures.size][capacity]
 }
+//Решал с помощью статей по теме "Динамическре програмирование" и разборов похожей задачи
