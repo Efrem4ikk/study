@@ -166,8 +166,7 @@ fun centerFile(inputName: String, outputName: String) {
         }
         for (str in File(inputName).readLines()) {
             val diff = (maxim - str.trim().length) / 2
-            for (space in 1..diff)
-                it.write(" ")
+            it.write(" ".repeat(diff))
             it.write(str.trim())
             it.newLine()
         }
