@@ -1,8 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 
-package lesson1.task1
+package lesson4.task1.task1
 
-import ru.spbstu.kotlin.generate.assume.retry
 import kotlin.math.*
 
 // Урок 1: простые функции

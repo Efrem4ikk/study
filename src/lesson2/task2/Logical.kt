@@ -2,7 +2,7 @@
 
 package lesson2.task2
 
-import lesson1.task1.sqr
+import lesson4.task1.task1.sqr
 import kotlin.math.abs
 import kotlin.math.sqrt
 

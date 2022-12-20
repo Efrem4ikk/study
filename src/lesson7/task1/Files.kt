@@ -89,18 +89,31 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     for (word in substrings) {
         var counter = 0
         for (str in File(inputName).readLines()) {
-            for (letterstart in str.indices) {
-                var newWord = ""
-                for (letterend in letterstart until str.length) {
-                    newWord += str[letterend].lowercaseChar()
-                    if (newWord == word.lowercase()) counter += 1
-                }
+            for (letterstart in 0..str.length - word.length) {
+                if (str.substring(letterstart, letterstart + word.length).lowercase() == word.lowercase()) counter++
             }
         }
         ans[word] = counter
     }
     return ans
 }
+//fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+//    val ans = mutableMapOf<String, Int>()
+//    for (word in substrings) {
+//        var counter = 0
+//        for (str in File(inputName).readLines()) {
+//            for (letterstart in str.indices) {
+//                var newWord = ""
+//                for (letterend in letterstart until str.length) {
+//                    newWord += str[letterend].lowercaseChar()
+//                    if (newWord == word.lowercase()) counter += 1
+//                }
+//            }
+//        }
+//        ans[word] = counter
+//    }
+//    return ans
+//}
 
 
 /**
@@ -122,7 +135,7 @@ fun sibilants(inputName: String, outputName: String) {
         for (str in File(inputName).readLines()) {
             var prev = ' '
             for (letter in str) {
-                if (prev.lowercaseChar() in ("жчшщЖЧШЩ")) {
+                if (prev in ("жчшщЖЧШЩ")) {
                     when (letter) {
                         'Ы' -> it.write("И")
                         'Я' -> it.write("А")
@@ -166,8 +179,7 @@ fun centerFile(inputName: String, outputName: String) {
         }
         for (str in File(inputName).readLines()) {
             val diff = (maxim - str.trim().length) / 2
-            it.write(" ".repeat(diff))
-            it.write(str.trim())
+            it.write(" ".repeat(diff) + str.trim())
             it.newLine()
         }
     }
@@ -202,39 +214,74 @@ fun centerFile(inputName: String, outputName: String) {
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
     val output = File(outputName).bufferedWriter()
+    val strings = mutableListOf<List<String>>()
     var maxim = -1
     output.use {
         for (str in File(inputName).readLines()) {
             val strWithoutSpace = str.split(" ").filter { it != "" }
             maxim = maxOf(maxim, strWithoutSpace.sumOf { it.length } + strWithoutSpace.size - 1)
+            strings += strWithoutSpace
         }
-        for (str in File(inputName).readLines()) {
-            val strWithoutSpace = str.split(" ").filter { it != "" }
-            val space = maxim - strWithoutSpace.sumOf { it.length }
+        for (str in strings) {
+            val space = maxim - str.sumOf { it.length }
             when {
-                strWithoutSpace.isEmpty() -> it.write("")
-                strWithoutSpace.size == 1 -> it.write(strWithoutSpace[0])
-                str.length == maxim -> it.write(str)
+                str.isEmpty() -> it.write("")
+                str.size == 1 -> it.write(str[0])
                 else -> {
-                    val nUsableWords = strWithoutSpace.size - 1
+                    val nUsableWords = str.size - 1
                     val spacesBetweenWords = space / nUsableWords
                     val spacesExtra = space % nUsableWords
                     var count = 0
                     for (i in 0 until nUsableWords) {
-                        it.write(strWithoutSpace[i])
+                        it.write(str[i])
                         for (j in 0 until spacesBetweenWords) it.write(" ")
                         if (count < spacesExtra) {
                             it.write(" ")
                             count++
                         }
                     }
-                    it.write(strWithoutSpace.last())
+                    it.write(str.last())
                 }
             }
             it.newLine()
         }
     }
 }
+//fun alignFileByWidth(inputName: String, outputName: String) {
+//    val output = File(outputName).bufferedWriter()
+//    var maxim = -1
+//    output.use {
+//        for (str in File(inputName).readLines()) {
+//            val strWithoutSpace = str.split(" ").filter { it != "" }
+//            maxim = maxOf(maxim, strWithoutSpace.sumOf { it.length } + strWithoutSpace.size - 1)
+//        }
+//        for (str in File(inputName).readLines()) {
+//            val strWithoutSpace = str.split(" ").filter { it != "" }
+//            val space = maxim - strWithoutSpace.sumOf { it.length }
+//            when {
+//                strWithoutSpace.isEmpty() -> it.write("")
+//                strWithoutSpace.size == 1 -> it.write(strWithoutSpace[0])
+//                str.length == maxim -> it.write(str)
+//                else -> {
+//                    val nUsableWords = strWithoutSpace.size - 1
+//                    val spacesBetweenWords = space / nUsableWords
+//                    val spacesExtra = space % nUsableWords
+//                    var count = 0
+//                    for (i in 0 until nUsableWords) {
+//                        it.write(strWithoutSpace[i])
+//                        for (j in 0 until spacesBetweenWords) it.write(" ")
+//                        if (count < spacesExtra) {
+//                            it.write(" ")
+//                            count++
+//                        }
+//                    }
+//                    it.write(strWithoutSpace.last())
+//                }
+//            }
+//            it.newLine()
+//        }
+//    }
+//}
 
 /**
  * Средняя (14 баллов)

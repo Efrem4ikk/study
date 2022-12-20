@@ -2,8 +2,8 @@
 
 package lesson4.task1
 
-import lesson1.task1.discriminant
-import lesson1.task1.sqr
+import lesson4.task1.task1.discriminant
+import lesson4.task1.task1.sqr
 import lesson3.task1.digitNumber
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
@@ -205,29 +205,56 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun minDivFrom(n: Int, start: Int): Int {
-    return if (isPrime(n)) n else {
-        val num = n.toDouble()
-        for (i in start..sqrt(num).toInt()) {
-            if (n % i == 0) return i
-        }
-        return -1
-    }
-}
-
 fun factorize(n: Int): List<Int> {
     var num = n
-    var i = minDivFrom(num, 2)
+    var i = minDivisor(n)
     val list = mutableListOf<Int>()
     while (num > 1) {
-        while (num % i == 0) {
+        if (i > sqrt(num.toDouble())) {
+            list += num
+            break
+        }
+        if (num % i == 0) {
             list += i
             num /= i
-        }
-        i = minDivFrom(num, i)
+        } else i++
     }
     return list
 }
+
+//fun isPrimeFrom(n: Int, start: Int): Boolean {
+//    if (n < 2) return false
+//    if (n == 2) return true
+//    if (n % 2 == 0) return false
+//    for (m in start..sqrt(n.toDouble()).toInt()) {
+//        if (n % m == 0) return false
+//    }
+//    return true
+//}
+//
+//fun minDivFrom(n: Int, start: Int): Int {
+//    if (isPrimeFrom(n, start)) return n else {
+//        val num = n.toDouble()
+//        for (i in start..sqrt(num).toInt()) {
+//            if (n % i == 0) return i
+//        }
+//        return -1
+//    }
+//}
+//
+//fun factorize(n: Int): List<Int> {
+//    var num = n
+//    var i = minDivFrom(num, 2)
+//    val list = mutableListOf<Int>()
+//    while (num > 1) {
+//        while (num % i == 0) {
+//            list += i
+//            num /= i
+//        }
+//        i = minDivFrom(num, i)
+//    }
+//    return list
+//}
 
 /**
  * Сложная (4 балла)
