@@ -1,5 +1,7 @@
 package lesson11.task1
 
+import java.math.BigInteger
+
 /**
  * Класс "беззнаковое большое целое число".
  *
@@ -13,64 +15,102 @@ package lesson11.task1
  */
 class UnsignedBigInteger : Comparable<UnsignedBigInteger> {
 
+    private val number: BigInteger
+
     /**
      * Конструктор из строки
      */
     constructor(s: String) {
-        TODO()
+        this.number = BigInteger(s)
     }
 
     /**
      * Конструктор из целого
      */
     constructor(i: Int) {
-        TODO()
+        this.number = BigInteger(i.toString())
     }
 
     /**
      * Сложение
      */
-    operator fun plus(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun plus(other: UnsignedBigInteger): UnsignedBigInteger =
+        UnsignedBigInteger((this.number + other.number).toString())
 
     /**
      * Вычитание (бросить ArithmeticException, если this < other)
      */
-    operator fun minus(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun minus(other: UnsignedBigInteger): UnsignedBigInteger {
+        if (this < other) {
+            throw ArithmeticException()
+        }
+        return UnsignedBigInteger((this.number - other.number).toString())
+    }
 
     /**
      * Умножение
      */
-    operator fun times(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun times(other: UnsignedBigInteger): UnsignedBigInteger {
+        when {
+            other.equals(0) -> return UnsignedBigInteger(0)
+            other.equals(1) -> return UnsignedBigInteger(this.number.toString())
+        }
+        return UnsignedBigInteger((this.number * other.number).toString())
+    }
 
     /**
      * Деление
      */
-    operator fun div(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun div(other: UnsignedBigInteger): UnsignedBigInteger {
+        return when {
+            other.equals(0) -> throw ArithmeticException()
+            other.equals(1) -> UnsignedBigInteger(this.number.toString())
+            else -> UnsignedBigInteger((this.number / other.number).toString())
+        }
+    }
 
     /**
      * Взятие остатка
      */
-    operator fun rem(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun rem(other: UnsignedBigInteger): UnsignedBigInteger {
+        return when {
+            other.equals(0) -> throw ArithmeticException()
+            other.equals(1) -> UnsignedBigInteger(0)
+            else -> UnsignedBigInteger((this.number % other.number).toInt())
+        }
+    }
 
     /**
      * Сравнение на равенство (по контракту Any.equals)
      */
-    override fun equals(other: Any?): Boolean = TODO()
+    override fun equals(other: Any?): Boolean {
+        if (other is UnsignedBigInteger) {
+            return this.number == other.number
+        }
+        return false
+    }
 
     /**
      * Сравнение на больше/меньше (по контракту Comparable.compareTo)
      */
-    override fun compareTo(other: UnsignedBigInteger): Int = TODO()
+    override fun compareTo(other: UnsignedBigInteger): Int {
+        when {
+            this.number.equals(other.number) -> return 0
+            this.number > (other.number) -> return 1
+            this.number < (other.number) -> return -1
+        }
+        throw ArithmeticException()
+    }
 
     /**
      * Преобразование в строку
      */
-    override fun toString(): String = TODO()
+    override fun toString(): String = this.number.toString()
 
     /**
      * Преобразование в целое
      * Если число не влезает в диапазон Int, бросить ArithmeticException
      */
-    fun toInt(): Int = TODO()
-
+    fun toInt(): Int =
+        this.toString().toIntOrNull() ?: throw ArithmeticException()
 }
