@@ -29,6 +29,10 @@ internal class UnsignedBigIntegerTest {
     @Tag("12")
     fun ubiTimes() {
         assertEquals(
+            UnsignedBigInteger("15552"),
+            UnsignedBigInteger("32") * UnsignedBigInteger("486")
+        )
+        assertEquals(
             UnsignedBigInteger("18446744073709551616"),
             UnsignedBigInteger("4294967296") * UnsignedBigInteger("4294967296")
         )
