@@ -12,18 +12,17 @@ package lesson11.task1
  * сравнение на равенство и неравенство
  */
 class UnsignedBigInteger : Comparable<UnsignedBigInteger> {
-
     private val number: MutableList<Int>
 
     /**
-     * Constructor from a string
+     * Конструктор из строки
      */
     constructor(s: String) {
         number = s.reversed().map { it.toInt() - '0'.toInt() }.toMutableList()
     }
 
     /**
-     * Constructor from the whole
+     * Конструктор из целого
      */
     constructor(i: Int) {
         number = mutableListOf()
@@ -35,7 +34,7 @@ class UnsignedBigInteger : Comparable<UnsignedBigInteger> {
     }
 
     /**
-     * Addition
+     * Сложение
      */
     operator fun plus(other: UnsignedBigInteger): UnsignedBigInteger {
         val result = UnsignedBigInteger("")
@@ -106,7 +105,13 @@ class UnsignedBigInteger : Comparable<UnsignedBigInteger> {
     /**
      * Деление
      */
-    operator fun div(other: UnsignedBigInteger): UnsignedBigInteger = TODO()
+    operator fun div(other: UnsignedBigInteger): UnsignedBigInteger {
+        when {
+            other.number.equals(0) -> throw ArithmeticException()
+            other.number.equals(1) -> return UnsignedBigInteger(this.number.toString())
+        }
+        TODO()
+    }
 
     /**
      * Взятие остатка
