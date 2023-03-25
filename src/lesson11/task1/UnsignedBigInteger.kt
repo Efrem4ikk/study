@@ -12,6 +12,7 @@ package lesson11.task1
  * сравнение на равенство и неравенство
  */
 class UnsignedBigInteger : Comparable<UnsignedBigInteger> {
+
     private val number: MutableList<Int>
 
     /**
